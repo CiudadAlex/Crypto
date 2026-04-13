@@ -6,6 +6,7 @@ import org.leviatanplatform.crypto.engine.files.FileContentWriter;
 import org.leviatanplatform.crypto.engine.key.EffectiveKeyGenerator;
 import org.leviatanplatform.crypto.engine.layers.ByteMaskLayer;
 import org.leviatanplatform.crypto.engine.layers.Layer;
+import org.leviatanplatform.crypto.engine.layers.RevolutionLayer;
 
 import java.io.IOException;
 import java.util.List;
@@ -23,10 +24,11 @@ public class CryptoEngine {
         FileContentWriter fileContentWriter = new FileContentWriter(pathFileEncrypted);
 
         byte[] chunk = fileContentIterator.getChunk(lengthBlockBytes);
+        int chunkIndex = 0;
         while (chunk != null) {
 
             List<Layer> listOfLayers = getListOfLayers();
-            byte[] effectiveKey = EffectiveKeyGenerator.generateEffectiveKey(key);
+            byte[] effectiveKey = EffectiveKeyGenerator.generateEffectiveKey(key, chunkIndex);
             byte[] encryptedChunk = chunk;
 
             for (Layer layer : listOfLayers) {
@@ -36,6 +38,7 @@ public class CryptoEngine {
             fileContentWriter.writeChunk(encryptedChunk);
 
             chunk = fileContentIterator.getChunk(lengthBlockBytes);
+            chunkIndex++;
         }
 
         fileContentIterator.close();
@@ -44,6 +47,6 @@ public class CryptoEngine {
 
     private List<Layer> getListOfLayers() {
         // FIXME add more layers
-        return List.of(new ByteMaskLayer());
+        return List.of(new ByteMaskLayer(), new RevolutionLayer());
     }
 }
