@@ -10,9 +10,9 @@ class RevolutionLayerTest {
 
     @Test
     void encryptAndDecrypt() throws IOException {
-        encryptAndDecrypt("Text to encrypt", "qwtrhdshhsjhsh");
-        encryptAndDecrypt("Another important message", "98057439857239");
-        encryptAndDecrypt("File content of high relevance", "4kith4ihrt42o2");
+        encryptAndDecrypt("Text to encrypt", "qwtrhdshhsjhshfwrgwefwrgwgw");
+        encryptAndDecrypt("Another important message", "9805743985723964768457457457");
+        encryptAndDecrypt("File content of high relevance", "4kith4ihrt42o2h74g764745g74g47g4");
     }
 
 
@@ -20,7 +20,7 @@ class RevolutionLayerTest {
 
         RevolutionLayer layer = new RevolutionLayer();
         byte[] encrypted = layer.encrypt(data.getBytes(), key.getBytes());
-        byte[] decrypted = layer.encrypt(encrypted, key.getBytes());
+        byte[] decrypted = layer.decrypt(encrypted, key.getBytes());
         String dataRecovered = new String(decrypted);
         assert data.equals(dataRecovered);
     }
