@@ -2,7 +2,7 @@ package org.leviatanplatform.crypto.engine.layers;
 
 public interface Layer {
 
-    void encrypt(byte[] chunk, byte[] key);
+    byte[] encrypt(byte[] chunk, byte[] effectiveKey);
 
-    void decrypt(byte[] chunk, byte[] key);
+    byte[] decrypt(byte[] chunk, byte[] effectiveKey);
 }
