@@ -13,6 +13,15 @@ public class FileContentIterator {
     }
 
     public FileContentIterator(File file) throws IOException {
+
+        if (!file.exists()) {
+            throw new RuntimeException("File does not exist: " + file.getCanonicalPath());
+        }
+
+        if (!file.isFile()) {
+            throw new RuntimeException("The path does not represent a file: " + file.getCanonicalPath());
+        }
+
         fis = new FileInputStream(file);
     }
 
