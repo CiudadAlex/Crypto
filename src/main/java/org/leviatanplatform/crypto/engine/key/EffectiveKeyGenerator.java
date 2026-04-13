@@ -6,6 +6,7 @@ public class EffectiveKeyGenerator {
 
         // FIXME apply algorithmKey
         // FIXME hash to randomize the bits (distribuidos equitativamente)
+        // FIXME considerar chunkIndex
         // byte[] digest = Digestor.digest(key);
 
         return key;

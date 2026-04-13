@@ -25,6 +25,7 @@ public class CryptoEngine {
 
         byte[] chunk = fileContentIterator.getChunk(lengthBlockBytes);
         int chunkIndex = 0;
+
         while (chunk != null) {
 
             List<Layer> listOfLayers = getListOfLayers();
