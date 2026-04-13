@@ -42,6 +42,8 @@ public class CryptoEngine {
             chunkIndex++;
         }
 
+        // FIXME consider last non complete chunk
+
         fileContentIterator.close();
         fileContentWriter.close();
     }
