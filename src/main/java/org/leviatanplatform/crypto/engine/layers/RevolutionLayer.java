@@ -17,7 +17,7 @@ public class RevolutionLayer implements Layer {
 
     private byte[] shuffle(byte[] chunk, byte[] effectiveKey, boolean encrypt) throws IOException {
 
-        List<Long> listSeeds = getSeeds(effectiveKey);
+        List<Long> listSeeds = getSeeds(effectiveKey, encrypt);
         byte[] shuffledChunk = chunk;
 
         for (long seed : listSeeds) {
@@ -45,7 +45,7 @@ public class RevolutionLayer implements Layer {
         return shuffledChunk;
     }
 
-    private List<Long> getSeeds(byte[] effectiveKey) throws IOException {
+    private List<Long> getSeeds(byte[] effectiveKey, boolean encrypt) throws IOException {
 
         List<Long> listSeeds = new ArrayList<>();
 
@@ -55,6 +55,10 @@ public class RevolutionLayer implements Layer {
         while (disEffectiveKey.available() >= 8) {
             long seed = disEffectiveKey.readLong();
             listSeeds.add(seed);
+        }
+
+        if (!encrypt) {
+            Collections.reverse(listSeeds);
         }
 
         return listSeeds;
