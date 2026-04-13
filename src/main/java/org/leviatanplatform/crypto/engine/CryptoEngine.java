@@ -2,6 +2,8 @@ package org.leviatanplatform.crypto.engine;
 
 import org.leviatanplatform.crypto.engine.config.Parameters;
 import org.leviatanplatform.crypto.engine.files.FileContentIterator;
+import org.leviatanplatform.crypto.engine.files.FileContentWriter;
+import org.leviatanplatform.crypto.engine.key.EffectiveKeyGenerator;
 import org.leviatanplatform.crypto.engine.layers.ByteMaskLayer;
 import org.leviatanplatform.crypto.engine.layers.Layer;
 
@@ -18,24 +20,30 @@ public class CryptoEngine {
 
         int lengthBlockBytes = Parameters.getInstance().getLengthBlockBytes();
         FileContentIterator fileContentIterator = new FileContentIterator(pathFilePlain);
+        FileContentWriter fileContentWriter = new FileContentWriter(pathFileEncrypted);
 
         byte[] chunk = fileContentIterator.getChunk(lengthBlockBytes);
         while (chunk != null) {
 
             List<Layer> listOfLayers = getListOfLayers();
-            byte[] effectiveKey = null;
+            byte[] effectiveKey = EffectiveKeyGenerator.generateEffectiveKey(key);
+            byte[] encryptedChunk = chunk;
 
             for (Layer layer : listOfLayers) {
-                layer.encrypt(chunk, effectiveKey);
+                encryptedChunk = layer.encrypt(encryptedChunk, effectiveKey);
             }
 
-            // FIXME apply layers
+            fileContentWriter.writeChunk(encryptedChunk);
 
             chunk = fileContentIterator.getChunk(lengthBlockBytes);
         }
+
+        fileContentIterator.close();
+        fileContentWriter.close();
     }
 
     private List<Layer> getListOfLayers() {
+        // FIXME add more layers
         return List.of(new ByteMaskLayer());
     }
 }
