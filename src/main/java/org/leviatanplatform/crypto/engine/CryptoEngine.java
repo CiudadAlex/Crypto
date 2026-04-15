@@ -13,11 +13,11 @@ import java.util.List;
 
 public class CryptoEngine {
 
-    public void encryptFile(String pathFilePlain, String pathFileEncrypted, String key) throws IOException {
+    public static void encryptFile(String pathFilePlain, String pathFileEncrypted, String key) throws IOException {
         encryptFile(pathFilePlain, pathFileEncrypted, key.getBytes());
     }
 
-    public void encryptFile(String pathFilePlain, String pathFileEncrypted, byte[] key) throws IOException {
+    public static void encryptFile(String pathFilePlain, String pathFileEncrypted, byte[] key) throws IOException {
 
         int lengthBlockBytes = Parameters.getInstance().getLengthBlockBytes();
         FileContentIterator fileContentIterator = new FileContentIterator(pathFilePlain);
@@ -48,7 +48,7 @@ public class CryptoEngine {
         fileContentWriter.close();
     }
 
-    private List<Layer> getListOfLayers() {
+    private static List<Layer> getListOfLayers() {
         // FIXME add more layers
         return List.of(new ByteMaskLayer(), new RevolutionLayer());
     }
