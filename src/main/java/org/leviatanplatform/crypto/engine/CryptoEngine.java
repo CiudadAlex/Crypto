@@ -18,6 +18,18 @@ public class CryptoEngine {
     }
 
     public static void encryptFile(String pathFilePlain, String pathFileEncrypted, byte[] key) throws IOException {
+        processFile(pathFilePlain, pathFileEncrypted, key, true);
+    }
+
+    public static void decryptFile(String pathFilePlain, String pathFileEncrypted, String key) throws IOException {
+        decryptFile(pathFilePlain, pathFileEncrypted, key.getBytes());
+    }
+
+    public static void decryptFile(String pathFilePlain, String pathFileEncrypted, byte[] key) throws IOException {
+        processFile(pathFilePlain, pathFileEncrypted, key, false);
+    }
+
+    private static void processFile(String pathFilePlain, String pathFileEncrypted, byte[] key, boolean encryptOrDecrypt) throws IOException {
 
         int lengthBlockBytes = Parameters.getInstance().getLengthBlockBytes();
         FileContentIterator fileContentIterator = new FileContentIterator(pathFilePlain);
@@ -28,7 +40,7 @@ public class CryptoEngine {
 
         while (chunk != null) {
 
-            processChunk(chunk, chunkIndex, key, fileContentWriter, true);
+            processChunk(chunk, chunkIndex, key, fileContentWriter, encryptOrDecrypt);
 
             chunk = fileContentIterator.getChunk(lengthBlockBytes);
             chunkIndex++;
