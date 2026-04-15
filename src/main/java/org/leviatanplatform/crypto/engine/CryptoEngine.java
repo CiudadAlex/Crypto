@@ -28,15 +28,7 @@ public class CryptoEngine {
 
         while (chunk != null) {
 
-            List<Layer> listOfLayers = getListOfLayers();
-            byte[] effectiveKey = EffectiveKeyGenerator.generateEffectiveKey(key, chunkIndex);
-            byte[] encryptedChunk = chunk;
-
-            for (Layer layer : listOfLayers) {
-                encryptedChunk = layer.encrypt(encryptedChunk, effectiveKey);
-            }
-
-            fileContentWriter.writeChunk(encryptedChunk);
+            processChunk(chunk, chunkIndex, key, fileContentWriter, true);
 
             chunk = fileContentIterator.getChunk(lengthBlockBytes);
             chunkIndex++;
@@ -46,6 +38,24 @@ public class CryptoEngine {
 
         fileContentIterator.close();
         fileContentWriter.close();
+    }
+
+    private static void processChunk(byte[] chunk, int chunkIndex, byte[] key, FileContentWriter fileContentWriter, boolean encryptOrDecrypt) throws IOException {
+
+        List<Layer> listOfLayers = getListOfLayers();
+        byte[] effectiveKey = EffectiveKeyGenerator.generateEffectiveKey(key, chunkIndex);
+        byte[] processedChunk = chunk;
+
+        for (Layer layer : listOfLayers) {
+
+            if (encryptOrDecrypt) {
+                processedChunk = layer.encrypt(processedChunk, effectiveKey);
+            } else {
+                processedChunk = layer.decrypt(processedChunk, effectiveKey);
+            }
+        }
+
+        fileContentWriter.writeChunk(processedChunk);
     }
 
     private static List<Layer> getListOfLayers() {

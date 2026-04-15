@@ -8,8 +8,8 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        String pathFilePlain = "./.playground/";
-        String pathFileEncrypted = "./.playground/Oasis_Morning_Glory.mp3";
+        String pathFilePlain = "./.playground/Oasis_Morning_Glory.mp3";
+        String pathFileEncrypted = pathFilePlain + ".encrypted";
         String key = "password-key-to-encrypt";
         CryptoEngine.encryptFile(pathFilePlain, pathFileEncrypted, key);
     }
