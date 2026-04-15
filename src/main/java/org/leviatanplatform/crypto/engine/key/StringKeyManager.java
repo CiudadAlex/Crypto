@@ -11,10 +11,22 @@ public class StringKeyManager {
 
     public static byte[] generateKey(String stringKey) {
 
-        // FIXME hash to randomize the bits (distribuidos equitativamente)
-        // byte[] digest = Digestor.digest(key);
+        byte[] key = new byte[stringKey.length()];
 
-        return stringKey.getBytes();
+        for (int i = 0; i < stringKey.length(); i++) {
+
+            char ch = stringKey.charAt(i);
+            Byte b = MAP_CHARACTER_BYTE.get(ch);
+            b = b != null ? b : transformToChar(ch);
+            key[i] = b;
+        }
+
+        return key;
+    }
+
+    private static byte transformToChar(char ch) {
+        String oneCharString = "" + ch;
+        return oneCharString.getBytes()[0];
     }
 
     private static Map<Character, Byte> buildCharacterMap() {
@@ -22,10 +34,14 @@ public class StringKeyManager {
         List<Character> listNormalCharacters = getListNormalCharacters();
 
         Map<Character, Byte> map = new HashMap<>();
-        map.put('A', (byte) 0);
+        int jump = 255 / listNormalCharacters.size();
 
+        for (int i = 0; i < listNormalCharacters.size(); i++) {
+            char ch = listNormalCharacters.get(i);
+            int byteValue = i * jump - 127;
+            map.put(ch, (byte) byteValue);
+        }
 
-        // FIXME complete
         return map;
     }
 
@@ -51,6 +67,4 @@ public class StringKeyManager {
 
         return listNormalCharacters;
     }
-
-
 }

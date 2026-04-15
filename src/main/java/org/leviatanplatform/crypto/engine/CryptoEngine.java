@@ -4,6 +4,7 @@ import org.leviatanplatform.crypto.engine.config.Parameters;
 import org.leviatanplatform.crypto.engine.files.FileContentIterator;
 import org.leviatanplatform.crypto.engine.files.FileContentWriter;
 import org.leviatanplatform.crypto.engine.key.EffectiveKeyGenerator;
+import org.leviatanplatform.crypto.engine.key.StringKeyManager;
 import org.leviatanplatform.crypto.engine.layers.ByteMaskLayer;
 import org.leviatanplatform.crypto.engine.layers.Layer;
 import org.leviatanplatform.crypto.engine.layers.RevolutionLayer;
@@ -14,7 +15,7 @@ import java.util.List;
 public class CryptoEngine {
 
     public static void encryptFile(String pathFilePlain, String pathFileEncrypted, String key) throws IOException {
-        encryptFile(pathFilePlain, pathFileEncrypted, key.getBytes());
+        encryptFile(pathFilePlain, pathFileEncrypted, StringKeyManager.generateKey(key));
     }
 
     public static void encryptFile(String pathFilePlain, String pathFileEncrypted, byte[] key) throws IOException {
@@ -22,7 +23,7 @@ public class CryptoEngine {
     }
 
     public static void decryptFile(String pathFilePlain, String pathFileEncrypted, String key) throws IOException {
-        decryptFile(pathFilePlain, pathFileEncrypted, key.getBytes());
+        decryptFile(pathFilePlain, pathFileEncrypted, StringKeyManager.generateKey(key));
     }
 
     public static void decryptFile(String pathFilePlain, String pathFileEncrypted, byte[] key) throws IOException {
