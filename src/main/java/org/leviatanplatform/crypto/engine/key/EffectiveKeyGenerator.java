@@ -24,13 +24,15 @@ public class EffectiveKeyGenerator {
                 i++;
             }
 
+            if (baisKey.available() > 0) {
+                effectiveKey[i] = (byte) baisKey.read();
+                i++;
+            }
         }
 
         for (int k = 0; k < effectiveKey.length; k++) {
             effectiveKey[k] = (byte) (effectiveKey[k] + chunkIndex);
         }
-
-        // FIXME Entrelazar algorithmKey con key
 
         return effectiveKey;
     }
