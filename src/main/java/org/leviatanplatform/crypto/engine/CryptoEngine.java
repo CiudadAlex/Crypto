@@ -10,6 +10,8 @@ import org.leviatanplatform.crypto.engine.layers.Layer;
 import org.leviatanplatform.crypto.engine.layers.RevolutionLayer;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CryptoEngine {
@@ -55,7 +57,7 @@ public class CryptoEngine {
 
     private static void processChunk(byte[] chunk, int chunkIndex, byte[] key, FileContentWriter fileContentWriter, boolean encryptOrDecrypt) throws IOException {
 
-        List<Layer> listOfLayers = getListOfLayers();
+        List<Layer> listOfLayers = getListOfLayers(encryptOrDecrypt);
         byte[] effectiveKey = EffectiveKeyGenerator.generateEffectiveKey(key, chunkIndex);
         byte[] processedChunk = chunk;
 
@@ -71,8 +73,17 @@ public class CryptoEngine {
         fileContentWriter.writeChunk(processedChunk);
     }
 
-    private static List<Layer> getListOfLayers() {
+    private static List<Layer> getListOfLayers(boolean encryptOrDecrypt) {
+
         // FIXME add more layers
-        return List.of(new ByteMaskLayer(), new RevolutionLayer());
+        List<Layer> listLayersFixed = List.of(new ByteMaskLayer(), new RevolutionLayer());
+
+        List<Layer> listLayers = new ArrayList<>(listLayersFixed);
+
+        if (!encryptOrDecrypt) {
+            Collections.reverse(listLayers);
+        }
+
+        return listLayers;
     }
 }
