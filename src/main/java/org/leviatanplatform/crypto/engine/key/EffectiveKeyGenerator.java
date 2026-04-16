@@ -6,13 +6,31 @@ public class EffectiveKeyGenerator {
 
     public static byte[] generateEffectiveKey(byte[] key, int chunkIndex) {
 
-        Parameters parameters = Parameters.getInstance();
+        byte[] algorithmKey = getAlgorithmKey();
+
+        byte[] effectiveKey = new byte[key.length + algorithmKey.length];
 
 
-        // FIXME apply algorithmKey (load Parameters) Entrelazar con key
+        // FIXME Entrelazar algorithmKey con key
         // FIXME consider chunkIndex
 
-        return key;
+        return effectiveKey;
+    }
+
+    private static byte[] getAlgorithmKey() {
+
+        Parameters parameters = Parameters.getInstance();
+
+        String name = parameters.getName();
+        String surname = parameters.getSurname();
+        String birthdate = parameters.getBirthdate();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(surname);
+        sb.append(birthdate);
+        sb.append(name);
+
+        return sb.toString().getBytes();
     }
 
 
