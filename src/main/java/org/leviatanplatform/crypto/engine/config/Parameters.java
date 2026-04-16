@@ -28,9 +28,19 @@ public class Parameters {
         return lengthBlockBytes;
     }
 
-    private static Parameters load() {
+    public String getName() {
+        return name;
+    }
 
-        // FIXME finish
+    public String getSurname() {
+        return surname;
+    }
+
+    public String getBirthdate() {
+        return birthdate;
+    }
+
+    private static Parameters load() {
 
         Properties props = new Properties();
 
