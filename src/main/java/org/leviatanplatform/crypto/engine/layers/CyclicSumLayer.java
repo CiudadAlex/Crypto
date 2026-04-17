@@ -6,16 +6,18 @@ public class CyclicSumLayer implements Layer {
 
     @Override
     public byte[] encrypt(byte[] chunk, byte[] effectiveKey) {
+        return process(chunk, effectiveKey, true);
+    }
 
-        // FIXME sumar ciclico
+    private byte[] process(byte[] chunk, byte[] effectiveKey, boolean sumOrSubtract) {
 
         ByteCyclicIterator iteratorKeyBytes = new ByteCyclicIterator(effectiveKey);
         byte[] chunkEncrypted = new byte[chunk.length];
 
         for (int i = 0; i < chunk.length; i++) {
             byte data = chunk[i];
-            byte mask = iteratorKeyBytes.get();
-            byte encrypted = (byte) (data ^ mask);
+            byte keyItem = iteratorKeyBytes.get();
+            byte encrypted = sumOrSubtract ? (byte) (data + keyItem) : (byte) (data - keyItem);
             chunkEncrypted[i] = encrypted;
         }
 
@@ -24,8 +26,6 @@ public class CyclicSumLayer implements Layer {
 
     @Override
     public byte[] decrypt(byte[] chunk, byte[] effectiveKey) {
-
-        // FIXME sumar ciclico
-        return null;
+        return process(chunk, effectiveKey, false);
     }
 }

@@ -3,7 +3,7 @@ package org.leviatanplatform.crypto.engine.layers;
 import org.junit.jupiter.api.Test;
 import java.io.IOException;
 
-class ByteMaskLayerTest {
+class CyclicSumLayerTest {
 
     @Test
     void encryptAndDecrypt() throws IOException {
@@ -15,7 +15,7 @@ class ByteMaskLayerTest {
 
     private void encryptAndDecrypt(String data, String key) throws IOException {
 
-        ByteMaskLayer layer = new ByteMaskLayer();
+        CyclicSumLayer layer = new CyclicSumLayer();
         TestLayerUtils.encryptAndDecrypt(layer, data, key);
     }
 

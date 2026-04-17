@@ -1,10 +1,7 @@
 package org.leviatanplatform.crypto.engine.layers;
 
 import org.junit.jupiter.api.Test;
-
 import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class RevolutionLayerTest {
 
@@ -19,9 +16,6 @@ class RevolutionLayerTest {
     private void encryptAndDecrypt(String data, String key) throws IOException {
 
         RevolutionLayer layer = new RevolutionLayer();
-        byte[] encrypted = layer.encrypt(data.getBytes(), key.getBytes());
-        byte[] decrypted = layer.decrypt(encrypted, key.getBytes());
-        String dataRecovered = new String(decrypted);
-        assert data.equals(dataRecovered);
+        TestLayerUtils.encryptAndDecrypt(layer, data, key);
     }
 }
