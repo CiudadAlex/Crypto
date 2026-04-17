@@ -8,6 +8,8 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         encryptAndDecrypt("Oasis_Morning_Glory","mp3");
+
+        // FIXME key importada de fichero
     }
 
     private static void encryptAndDecrypt(String fileName, String extension) throws IOException {

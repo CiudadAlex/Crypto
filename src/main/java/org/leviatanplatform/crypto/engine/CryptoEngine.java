@@ -6,6 +6,7 @@ import org.leviatanplatform.crypto.engine.files.FileContentWriter;
 import org.leviatanplatform.crypto.engine.key.EffectiveKeyGenerator;
 import org.leviatanplatform.crypto.engine.key.StringKeyManager;
 import org.leviatanplatform.crypto.engine.layers.ByteMaskLayer;
+import org.leviatanplatform.crypto.engine.layers.CyclicSumLayer;
 import org.leviatanplatform.crypto.engine.layers.Layer;
 import org.leviatanplatform.crypto.engine.layers.RevolutionLayer;
 
@@ -73,8 +74,7 @@ public class CryptoEngine {
 
     private static List<Layer> getListOfLayers(boolean encryptOrDecrypt) {
 
-        // FIXME add more layers
-        List<Layer> listLayersFixed = List.of(new ByteMaskLayer(), new RevolutionLayer());
+        List<Layer> listLayersFixed = List.of(new ByteMaskLayer(), new RevolutionLayer(), new CyclicSumLayer());
 
         List<Layer> listLayers = new ArrayList<>(listLayersFixed);
 
