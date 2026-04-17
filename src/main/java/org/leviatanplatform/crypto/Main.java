@@ -14,7 +14,7 @@ public class Main {
         String key = "password-key-to-encrypt";
         encryptAndDecrypt("Oasis_Morning_Glory","mp3", key);
 
-        FileContentExtractor.extract(PATH_PLAYGROUND + "/");
+        FileContentExtractor.extract(PATH_PLAYGROUND + "/RandomFile.key");
 
         // FIXME key importada de fichero
     }
