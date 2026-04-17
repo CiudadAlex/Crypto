@@ -44,7 +44,7 @@ public class Parameters {
 
         Properties props = new Properties();
 
-        try (InputStream input = Parameters.class.getClassLoader().getResourceAsStream(CONFIG_FILE_NAME)) {
+        try (InputStream input = Parameters.class.getResourceAsStream(CONFIG_FILE_NAME)) {
 
             if (input == null) {
                 throw new RuntimeException("File " + CONFIG_FILE_NAME + " not found");
