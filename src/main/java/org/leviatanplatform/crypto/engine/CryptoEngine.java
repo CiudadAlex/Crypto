@@ -48,6 +48,8 @@ public class CryptoEngine {
 
             chunk = fileContentIterator.getChunk(lengthBlockBytes);
             chunkIndex++;
+
+            System.out.println("Chunk done: " + chunkIndex);
         }
 
         fileContentIterator.close();

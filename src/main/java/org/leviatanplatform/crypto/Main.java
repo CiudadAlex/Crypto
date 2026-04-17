@@ -18,8 +18,8 @@ public class Main {
         String pathFileEncrypted = pathFilePlain + ".encrypted";
         String pathFileDecrypted = pathFileEncrypted + ".decrypted" + "." + extension;
 
-        String key = "password-key-to-encrypt";
-        //byte[] key = FileContentExtractor.extract(PATH_PLAYGROUND + "/RandomFile.key");
+        //String key = "password-key-to-encrypt";
+        byte[] key = FileContentExtractor.extract(PATH_PLAYGROUND + "/RandomFile.key");
 
         CryptoEngine.encryptFile(pathFilePlain, pathFileEncrypted, key);
         CryptoEngine.decryptFile(pathFileEncrypted, pathFileDecrypted, key);
