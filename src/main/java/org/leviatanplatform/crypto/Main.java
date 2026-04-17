@@ -1,23 +1,28 @@
 package org.leviatanplatform.crypto;
 
 import org.leviatanplatform.crypto.engine.CryptoEngine;
+import org.leviatanplatform.crypto.engine.files.FileContentExtractor;
 
 import java.io.IOException;
 
 public class Main {
 
+    private static final String PATH_PLAYGROUND = "./.playground";
+
     public static void main(String[] args) throws IOException {
-        encryptAndDecrypt("Oasis_Morning_Glory","mp3");
+
+        String key = "password-key-to-encrypt";
+        encryptAndDecrypt("Oasis_Morning_Glory","mp3", key);
+
+        FileContentExtractor.extract(PATH_PLAYGROUND + "/");
 
         // FIXME key importada de fichero
     }
 
-    private static void encryptAndDecrypt(String fileName, String extension) throws IOException {
+    private static void encryptAndDecrypt(String fileName, String extension, String key) throws IOException {
 
-        String pathFilePlain = "./.playground/" + fileName + "." + extension;
+        String pathFilePlain = PATH_PLAYGROUND + "/" + fileName + "." + extension;
         String pathFileEncrypted = pathFilePlain + ".encrypted";
-
-        String key = "password-key-to-encrypt";
 
         CryptoEngine.encryptFile(pathFilePlain, pathFileEncrypted, key);
 
